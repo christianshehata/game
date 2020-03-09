@@ -10,14 +10,36 @@ var text;
 var winningMessage;
 var won = false;
 var currentScore = 0;
-var winningScore = 10;
+var winningScore = 100;
+var clickMeButton;
 
+
+// Catalogue questions
+questions = ['Please answer the following question: Are you retarded?',
+            'What the fuck are you doing?',
+            'Who the fuck are you?',
+            'Using MAC or Windows?',
+            'Fuck bitches get money'
+];
+
+// create a single animated item and add to screen
+function createItem(left, top, image) {
+  var item = items.create(left, top, image);
+  item.animations.add('spin');
+  item.animations.play('spin', 10, true);
+}
 
 
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
   createItem(300, 500, 'coin');
+  createItem(500, 200, 'coin');
+  createItem(100, 100, 'coin');
+  createItem(50, 300, 'coin');
+  createItem(200, 400, 'coin');
+
+
 }
 
 // add platforms to the game
@@ -30,12 +52,7 @@ function addPlatforms() {
   platforms.setAll('body.immovable', true);
 }
 
-// create a single animated item and add to screen
-function createItem(left, top, image) {
-  var item = items.create(left, top, image);
-  item.animations.add('spin');
-  item.animations.play('spin', 10, true);
-}
+
 
 // create the winning badge and add to screen
 function createBadge() {
@@ -49,17 +66,13 @@ function createBadge() {
 // when the player collects an item on the screen
 function itemHandler(player, item) {
   item.kill();
-
-  questions = ['Please answer the following question: Are you retarded?'];
-  for (var i = 0; i < questions.length; i++) {
-    let answer = prompt(questions[i]);
+    let answer = prompt(questions[Math.floor(Math.random() * questions.length)]);
     if (answer === 'Yes') {
       currentScore = currentScore + 10;
+      // createItem(50, 100, 'coin')
     } else {
       alert('You failed bro')
     }
-  }
-
   if (currentScore === winningScore) {
       createBadge();
       Swal.fire('Good job!', 'Take the badge', 'success')
@@ -76,6 +89,7 @@ function badgeHandler(player, badge) {
 // setup game when the web page loads
 window.onload = function () {
   game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+
   
   // before the game begins
   function preload() {
@@ -89,10 +103,22 @@ window.onload = function () {
     game.load.spritesheet('coin', 'coin.png', 36, 44);
     game.load.spritesheet('question', 'question.png', 36, 44);
     game.load.spritesheet('badge', 'badge.png', 42, 54);
+    game.load.spritesheet('button', 'play-button.png', 24, 24);
+
   }
 
-  // Initial PopUp for information reasons
-  confirm('Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. Have fun!');
+  // Initial PopUp for information reasons before the game loads
+  confirm('Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?');
+
+  function actionOnClick() {
+    confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
+
+  }
+  
+  function over() {
+
+
+  }
 
   // initial game set up
   function create() {
@@ -109,9 +135,13 @@ window.onload = function () {
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
+    clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
+    clickMeButton.onInputOver.add(over, this);
     winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Arial", fill: "white" });
     winningMessage.anchor.setTo(0.5, 1);
   }
+
+
 
   // while the game is running
   function update() {
@@ -148,8 +178,8 @@ window.onload = function () {
   }
 
 
-  function render() {
 
+  function render() {
   }
 
 };
