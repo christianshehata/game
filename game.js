@@ -10,9 +10,9 @@ var text;
 var winningMessage;
 var won = false;
 var currentScore = 0;
-var winningScore = 100;
+var winningScore = 50;
 var clickMeButton;
-
+var attemptsText = 0;
 
 // Catalogue questions & answers
 questions = ['Please answer the following question: Are you retarded?',
@@ -71,10 +71,11 @@ function itemHandler(player, item) {
     let randomIndex = Math.floor(Math.random() * questions.length);
     let randomQuestion = questions[randomIndex];
     let answer = prompt(randomQuestion);
-    if (answer === 'Yes') {
+    if (answer === answers[randomIndex]) {
       currentScore = currentScore + 10;
     } else {
-      alert('You failed bro')
+      alert('You failed bro');
+      attemptsText = attemptsText + 1;
     }
   if (currentScore === winningScore) {
       createBadge();
@@ -138,6 +139,7 @@ window.onload = function () {
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
+    attemptsText = game.add.text(590, 16, "ATTEMPTS: " + attemptsText, { font: "bold 24px Arial", fill: "white" });
     clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
     clickMeButton.onInputOver.add(over, this);
     winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Arial", fill: "white" });
@@ -149,6 +151,7 @@ window.onload = function () {
   // while the game is running
   function update() {
     text.text = "SCORE: " + currentScore;
+    attemptsText.text = "ATTEMPTS: " + attemptsText;
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
@@ -179,8 +182,6 @@ window.onload = function () {
       winningMessage.text = "YOU WON!!! 😎";
     }
   }
-
-
 
   function render() {
   }
