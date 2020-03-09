@@ -14,13 +14,15 @@ var winningScore = 100;
 var clickMeButton;
 
 
-// Catalogue questions
+// Catalogue questions & answers
 questions = ['Please answer the following question: Are you retarded?',
             'What the fuck are you doing?',
             'Who the fuck are you?',
             'Using MAC or Windows?',
-            'Fuck bitches get money'
+            'Is Strembeck bullshitting us?'
 ];
+
+answers = ['Yes', 'Chilling', 'Christian', 'MAC', 'Yes'];
 
 // create a single animated item and add to screen
 function createItem(left, top, image) {
@@ -66,10 +68,11 @@ function createBadge() {
 // when the player collects an item on the screen
 function itemHandler(player, item) {
   item.kill();
-    let answer = prompt(questions[Math.floor(Math.random() * questions.length)]);
+    let randomIndex = Math.floor(Math.random() * questions.length);
+    let randomQuestion = questions[randomIndex];
+    let answer = prompt(randomQuestion);
     if (answer === 'Yes') {
       currentScore = currentScore + 10;
-      // createItem(50, 100, 'coin')
     } else {
       alert('You failed bro')
     }
