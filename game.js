@@ -7,22 +7,24 @@ var items;
 var cursors;
 var jumpButton;
 var text;
+var attemptsText;
 var winningMessage;
 var won = false;
 var currentScore = 0;
 var winningScore = 50;
 var clickMeButton;
-var attemptsText = 0;
+var attempts = 0;
 
 // Catalogue questions & answers
-questions = ['Please answer the following question: Are you retarded?',
-            'What the fuck are you doing?',
-            'Who the fuck are you?',
-            'Using MAC or Windows?',
-            'Is Strembeck bullshitting us?'
-];
 
-answers = ['Yes', 'Chilling', 'Christian', 'MAC', 'Yes'];
+questions = [
+  'Please answer the following question: Are you retarded?',
+  'What the fuck are you doing?',
+  'Who the fuck are you?',
+  'Using MAC or Windows?',
+  'Is Strembeck bullshitting us?'
+];
+answers = ['Yes', 'Chilling', 'Christian', 'MAC', 'Hell yeah'];
 
 // create a single animated item and add to screen
 function createItem(left, top, image) {
@@ -36,10 +38,10 @@ function createItem(left, top, image) {
 function addItems() {
   items = game.add.physicsGroup();
   createItem(300, 500, 'coin');
-  createItem(500, 200, 'coin');
-  createItem(100, 100, 'coin');
-  createItem(50, 300, 'coin');
-  createItem(200, 400, 'coin');
+  createItem(500, 100, 'coin');
+  createItem(200, 150, 'coin');
+  createItem(150, 300, 'coin');
+  createItem(500, 500, 'coin');
 
 
 }
@@ -66,20 +68,32 @@ function createBadge() {
 }
 
 // when the player collects an item on the screen
-function itemHandler(player, item) {
+async function itemHandler(player, item) {
   item.kill();
-    let randomIndex = Math.floor(Math.random() * questions.length);
-    let randomQuestion = questions[randomIndex];
-    let answer = prompt(randomQuestion);
-    if (answer === answers[randomIndex]) {
-      currentScore = currentScore + 10;
-    } else {
-      alert('You failed bro');
-      attemptsText = attemptsText + 1;
+  let randomIndex = Math.floor(Math.random() * questions.length);
+  let randomQuestion = questions[randomIndex];
+  let randomAnswer = answers[randomIndex];
+  const {value: usersChoiceIndex} = await Swal.fire({
+    title: randomQuestion,
+    input: 'radio',
+    inputOptions: answers,
+    inputValidator: (value) => {
+      if (!value) {
+        return 'You need to choose something!'
+      }
     }
+  });
+
+  // Validation of the correct answer
+  if (answers[usersChoiceIndex] === randomAnswer) {
+    currentScore = currentScore + 10;
+  } else {
+    alert('Still retarded...god damn..');
+    attempts = attempts + 1;
+  }
   if (currentScore === winningScore) {
-      createBadge();
-      Swal.fire('Good job!', 'Take the badge', 'success')
+    createBadge();
+    Swal.fire('Good job!', 'Take the badge', 'success')
   }
 
 }
@@ -97,7 +111,7 @@ window.onload = function () {
   
   // before the game begins
   function preload() {
-    game.stage.backgroundColor = '#5db1ad';
+    game.stage.backgroundColor = '#2562ff';
     
     //Load images
     game.load.image('platform', 'platform_1.png');
@@ -107,22 +121,34 @@ window.onload = function () {
     game.load.spritesheet('coin', 'coin.png', 36, 44);
     game.load.spritesheet('question', 'question.png', 36, 44);
     game.load.spritesheet('badge', 'badge.png', 42, 54);
-    game.load.spritesheet('button', 'play-button.png', 24, 24);
+    game.load.spritesheet('button', 'instructions.png', 32, 32);
 
   }
 
   // Initial PopUp for information reasons before the game loads
-  confirm('Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?');
+  Swal.fire({
+  title: 'Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?',
+  width: 600,
+  padding: '3em',
+  background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+  backdrop: `
+    rgba(0,0,123,0.4)
+    url("https://sweetalert2.github.io/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `
+});
 
   function actionOnClick() {
-    confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
-
+    // confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
+    Swal.fire({
+        icon: 'info',
+        title: 'Instruction',
+        text: 'Welcome to your first level: HTML 🧐 Answer the questions by collecting the coins!',
+        footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
+    })
   }
-  
-  function over() {
 
-
-  }
 
   // initial game set up
   function create() {
@@ -138,11 +164,10 @@ window.onload = function () {
 
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
-    attemptsText = game.add.text(590, 16, "ATTEMPTS: " + attemptsText, { font: "bold 24px Arial", fill: "white" });
+    text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Permanent Marker", fill: "white" });
+    attemptsText = game.add.text(640, 16, "WRONG: " + attemptsText, { font: "bold 24px Permanent Marker", fill: "white" });
     clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
-    clickMeButton.onInputOver.add(over, this);
-    winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Arial", fill: "white" });
+    winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
     winningMessage.anchor.setTo(0.5, 1);
   }
 
@@ -151,7 +176,7 @@ window.onload = function () {
   // while the game is running
   function update() {
     text.text = "SCORE: " + currentScore;
-    attemptsText.text = "ATTEMPTS: " + attemptsText;
+    attemptsText.text = "WRONG: " + attempts;
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
@@ -179,7 +204,7 @@ window.onload = function () {
     }
     // when the player wins the game
     if (won) {
-      winningMessage.text = "YOU WON!!! 😎";
+      winningMessage.text = 'YOU WON !! 😎'
     }
   }
 
