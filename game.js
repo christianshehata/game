@@ -14,17 +14,37 @@ var currentScore = 0;
 var winningScore = 50;
 var clickMeButton;
 var attempts = 0;
+var questionArray = [];
+var rightAnswersArray = [];
+var falseAnswersArray = [];
 
-// Catalogue questions & answers
 
-questions = [
-  'Please answer the following question: Are you retarded?',
-  'What the fuck are you doing?',
-  'Who the fuck are you?',
-  'Using MAC or Windows?',
-  'Is Strembeck bullshitting us?'
-];
-answers = ['Yes', 'Chilling', 'Christian', 'MAC', 'Hell yeah'];
+// Connecting our 'database' with our cool game ._.
+var connect = new XMLHttpRequest();
+connect.open('GET', 'FragenKatalog.xsd', false);
+connect.setRequestHeader('Content-Type', "text/xml");
+connect.send(null);
+var theDocument = connect.responseXML;
+var gameQuestions = theDocument.childNodes[0];
+ for (var i = 0; i < gameQuestions.children.length; i++) {
+   var gameQuestion = gameQuestions.children[i];
+   // Extracting the false answers out of the XML Document
+   var falseAnswersCollection = gameQuestion.getElementsByTagName('answer');
+   var falseAnswers = falseAnswersCollection[0].textContent.toString();
+   // Extracting the right answers out of the XML Document
+   var rightAnswersCollection = gameQuestion.getElementsByTagName('rightanswer');
+   var rightAnswers = rightAnswersCollection[0].textContent.toString();
+   // Extracting the questions
+   var questionsCollection = gameQuestion.getElementsByTagName('question');
+   var questions = questionsCollection[0].textContent.toString();
+   questionArray.push(questions);
+   rightAnswersArray.push(rightAnswers);
+   falseAnswersArray.push(falseAnswers);
+ }
+ console.log(questionArray);
+ console.log(rightAnswersArray);
+ console.log(falseAnswersArray);
+
 
 // create a single animated item and add to screen
 function createItem(left, top, image) {
@@ -33,11 +53,19 @@ function createItem(left, top, image) {
   item.animations.play('spin', 10, true);
 }
 
+// randomInt between range
+function getRandomInt(x, y) {
+    x = Math.ceil(x);
+    y = Math.floor(y);
+    var randomNumber = Math.floor(Math.random() * (y - x)) + x;
+    return Math.abs(randomNumber)
+
+}
 
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
-  createItem(300, 500, 'coin');
+  createItem(getRandomInt(300,420), getRandomInt(100,600), 'coin');
   createItem(500, 100, 'coin');
   createItem(200, 150, 'coin');
   createItem(150, 300, 'coin');
@@ -67,16 +95,24 @@ function createBadge() {
 
 }
 
+
+
+
+
 // when the player collects an item on the screen
 async function itemHandler(player, item) {
   item.kill();
-  let randomIndex = Math.floor(Math.random() * questions.length);
-  let randomQuestion = questions[randomIndex];
-  let randomAnswer = answers[randomIndex];
+  let randomQuestionIndex = Math.floor(Math.random() * questionArray.length);
+  let randomAnswersIndex = Math.floor(Math.random() * falseAnswersArray.length);
+  let randomQuestion = questionArray[randomQuestionIndex];
+  let randomAnswer = rightAnswersArray[randomQuestionIndex];
+  let inputOptions = falseAnswersArray.splice(0,randomAnswersIndex);
+  inputOptions.push(randomAnswer);
   const {value: usersChoiceIndex} = await Swal.fire({
+    width: 600,
     title: randomQuestion,
     input: 'radio',
-    inputOptions: answers,
+    inputOptions: inputOptions,
     inputValidator: (value) => {
       if (!value) {
         return 'You need to choose something!'
@@ -85,10 +121,10 @@ async function itemHandler(player, item) {
   });
 
   // Validation of the correct answer
-  if (answers[usersChoiceIndex] === randomAnswer) {
+  if (inputOptions[usersChoiceIndex] === randomAnswer) {
     currentScore = currentScore + 10;
   } else {
-    alert('Still retarded...god damn..');
+    createItem(getRandomInt(100,400), getRandomInt(200,500), 'coin');
     attempts = attempts + 1;
   }
   if (currentScore === winningScore) {
