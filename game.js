@@ -17,6 +17,10 @@ var attempts = 0;
 var questionArray = [];
 var rightAnswersArray = [];
 var falseAnswersArray = [];
+var milliSec = 0;
+var seconds = 0;
+var time;
+var t;
 
 
 // Connecting our 'database' with our cool game ._.
@@ -205,6 +209,7 @@ window.onload = function () {
     clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
     winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
     winningMessage.anchor.setTo(0.5, 1);
+    time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
   }
 
 
@@ -213,10 +218,14 @@ window.onload = function () {
   function update() {
     text.text = "SCORE: " + currentScore;
     attemptsText.text = "WRONG: " + attempts;
+    time.text = seconds + ":" + milliSec;
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
+    // Timer
+    updateTime();
+    t = setTimeout(updateTime,1000000);
 
     // is the left cursor key pressed?
     if (cursors.left.isDown) {
@@ -242,6 +251,17 @@ window.onload = function () {
     if (won) {
       winningMessage.text = 'YOU WON !! 😎'
     }
+  }
+
+
+  // Update time
+  function updateTime() {
+    milliSec++;
+    if (milliSec >= 60) {
+      milliSec = 0;
+      seconds++
+    }
+
   }
 
   function render() {
