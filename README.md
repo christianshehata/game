@@ -1,2 +1,4 @@
 # game
- Simple JavaScript Game
+ Simple JavaScript Teaching Game (Course: Corporate IT I)
+
+ 
