@@ -16,6 +16,8 @@ var attempts = 0;
 var questionArray = [];
 var rightAnswersArray = [];
 var falseAnswersArray = [];
+var inputOptions = [];
+var usedQuestions = [];
 var minutes = 0;
 var seconds = 0;
 var t;
@@ -102,18 +104,23 @@ function createBadge() {
 
 }
 
+// function for shuffeling elements in an array
+// used for suffeling the inputOptions
+function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+  }
+
 // when the player collects an item on the screen
 async function itemHandler(player, item) {
     item.kill();
     let randomQuestionIndex = Math.floor(Math.random() * questionArray.length);
-    let randomAnswersIndex = Math.floor(Math.random() * falseAnswersArray.length);
-    let randomQuestion = questionArray[randomQuestionIndex];
-    let randomAnswer = rightAnswersArray[randomQuestionIndex];
-    let inputOptions = falseAnswersArray.splice(0, randomAnswersIndex);
-    inputOptions.push(randomAnswer);
+    let inputOptions = [rightAnswersArray[randomQuestionIndex], falseAnswersArray[randomQuestionIndex*2], falseAnswersArray[(randomQuestionIndex*2)+1]];
+  
+    shuffle(inputOptions);
+
     const { value: usersChoiceIndex } = await Swal.fire({
         width: 600,
-        title: randomQuestion,
+        title: questionArray[randomQuestionIndex],
         input: 'radio',
         inputOptions: inputOptions,
         inputValidator: (value) => {
@@ -124,18 +131,25 @@ async function itemHandler(player, item) {
     });
 
     // Validation of the correct answer
-    if (inputOptions[usersChoiceIndex] === randomAnswer) {
+    if (rightAnswersArray.includes(inputOptions[usersChoiceIndex])){
         currentScore = currentScore + 10;
-    } else {
-        createItem(getRandomInt(100, 400), getRandomInt(200, 500), 'coin');
+        rightAnswersArray.splice(rightAnswersArray.indexOf(inputOptions[usersChoiceIndex]), 1);
+        falseAnswersArray.splice(falseAnswersArray.indexOf(inputOptions), 1);
+        falseAnswersArray.splice(falseAnswersArray.indexOf(inputOptions), 1);
+        questionArray.splice(questionArray.indexOf(questionArray[randomQuestionIndex], 1));
+        // we could leave usedQuestions array out, but I leave it for now
+        usedQuestions.push(inputOptions);
+        inputOptions = [];
+      } else {
+        createItem(getRandomInt(100,400), getRandomInt(200,500), 'coin');
         attempts = attempts + 1;
-    }
-    if (currentScore === winningScore) {
+      }
+      if (currentScore === winningScore) {
         createBadge();
         Swal.fire('Good job!', 'Take the badge', 'success')
+      }
+    
     }
-
-}
 
 // when the player collects the badge at the end of the game
 function badgeHandler(player, badge) {
