@@ -9,20 +9,20 @@ var jumpButton;
 var text;
 var attemptsText;
 var winningMessage;
+var loseMessage;
 var won = false;
+var lose = false;
 var currentScore = 0;
-var winningScore = 50;
+var winningScore = 120;
 var clickMeButton;
 var attempts = 0;
 var questionArray = [];
 var rightAnswersArray = [];
 var falseAnswersArrayFirst = [];
 var falseAnswersArraySecond = [];
-var milliSec = 0;
 var seconds = 0;
 var time;
 var t;
-var inputOptions = [];
 
 
 
@@ -53,7 +53,7 @@ var gameQuestions = theDocument.childNodes[0];
    falseAnswersArraySecond.push(falseAnswersSecond);
  }
 
- console.log(questionArray)
+console.log(questionArray)
 console.log(rightAnswersArray)
 console.log(falseAnswersArrayFirst)
 console.log(falseAnswersArraySecond)
@@ -76,24 +76,43 @@ function getRandomInt(x, y) {
 }
 
 // add collectable items to the game
+// X Width = 900, Y Height = 700
 function addItems() {
   items = game.add.physicsGroup();
-  createItem(getRandomInt(300,420), getRandomInt(100,600), 'coin');
-  createItem(500, 100, 'coin');
-  createItem(200, 150, 'coin');
-  createItem(150, 300, 'coin');
-  createItem(500, 500, 'coin');
-
-
+  //
+  createItem(820, 100, 'coin');
+  createItem(400, 100, 'coin');
+  createItem(150, 100, 'coin');
+  //
+  createItem(810, 300, 'coin');
+  createItem(420, 300, 'coin');
+  createItem(120, 300, 'coin');
+  //
+  createItem(800, 500, 'coin');
+  createItem(430, 500, 'coin');
+  createItem(140, 500, 'coin');
+  //
+/*  createItem(690, 520, 'coin');
+  createItem(130, 260, 'coin');
+  createItem(700, 500, 'coin');*/
 }
 
 // add platforms to the game
 function addPlatforms() {
   platforms = game.add.physicsGroup();
-  platforms.create(450, 150, 'platform');
-  platforms.create(200, 200, 'platform');
-  platforms.create(150, 350, 'platform');
-  platforms.create(100, 450, 'platform');
+  //
+  platforms.create(50, 150, 'platform');
+  platforms.create(350, 150, 'platform');
+  platforms.create(700, 150, 'platform');
+  //
+  platforms.create(50, 350, 'platform');
+  platforms.create(350, 350, 'platform');
+  platforms.create(700, 350, 'platform');
+  //
+  platforms.create(50, 550, 'platform');
+  platforms.create(350, 550, 'platform');
+  platforms.create(700, 550, 'platform');
+  //
   platforms.setAll('body.immovable', true);
 }
 
@@ -151,6 +170,9 @@ async function itemHandler(player, item) {
       } else {
         createItem(getRandomInt(100,400), getRandomInt(200,500), 'coin');
         attempts = attempts + 1;
+        if (attempts === 5) {
+          lose = true;
+        }
       }
       if (currentScore === winningScore) {
         createBadge();
@@ -165,9 +187,11 @@ function badgeHandler(player, badge) {
   won = true;
 }
 
+
+
 // setup game when the web page loads
 window.onload = function () {
-  game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+  game = new Phaser.Game(900, 700, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
   
   // before the game begins
@@ -210,6 +234,17 @@ window.onload = function () {
     })
   }
 
+  //Lose message
+  function loseOnClick() {
+    // confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
+    Swal.fire({
+        icon: 'warning',
+        title: 'You failed, keep it up!',
+        text: 'Reload to play again 🚀',
+        footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
+    })
+  }
+
 
   // initial game set up
   function create() {
@@ -226,10 +261,12 @@ window.onload = function () {
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Permanent Marker", fill: "white" });
-    attemptsText = game.add.text(640, 16, "WRONG: " + attemptsText, { font: "bold 24px Permanent Marker", fill: "white" });
+    attemptsText = game.add.text(740, 16, "WRONG: " + attemptsText, { font: "bold 24px Permanent Marker", fill: "white" });
     clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
     winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
     winningMessage.anchor.setTo(0.5, 1);
+    loseMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
+    loseMessage.anchor.setTo(0.5, 1);
 /*
     time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
 */
@@ -275,6 +312,9 @@ window.onload = function () {
     // when the player wins the game
     if (won) {
       winningMessage.text = 'YOU WON !! 😎'
+    } else if (lose) {
+      loseOnClick();
+      player.animations.stop();
     }
   }
 
