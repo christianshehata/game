@@ -16,11 +16,14 @@ var clickMeButton;
 var attempts = 0;
 var questionArray = [];
 var rightAnswersArray = [];
-var falseAnswersArray = [];
+var falseAnswersArrayFirst = [];
+var falseAnswersArraySecond = [];
 var milliSec = 0;
 var seconds = 0;
 var time;
 var t;
+var inputOptions = [];
+
 
 
 // Connecting our 'database' with our cool game ._.
@@ -32,9 +35,12 @@ var theDocument = connect.responseXML;
 var gameQuestions = theDocument.childNodes[0];
  for (var i = 0; i < gameQuestions.children.length; i++) {
    var gameQuestion = gameQuestions.children[i];
-   // Extracting the false answers out of the XML Document
-   var falseAnswersCollection = gameQuestion.getElementsByTagName('answer');
-   var falseAnswers = falseAnswersCollection[0].textContent.toString();
+   // Extracting the false answers (answer1) out of the XML Document
+   var falseAnswersCollectionFirst = gameQuestion.getElementsByTagName('answer');
+   var falseAnswersFirst = falseAnswersCollectionFirst[0].textContent.toString();
+   // Extracting the false answers (answer1) out of the XML Document
+   var falseAnswersCollectionSecond = gameQuestion.getElementsByTagName('answer2');
+   var falseAnswersSecond = falseAnswersCollectionSecond[0].textContent.toString();
    // Extracting the right answers out of the XML Document
    var rightAnswersCollection = gameQuestion.getElementsByTagName('rightanswer');
    var rightAnswers = rightAnswersCollection[0].textContent.toString();
@@ -43,11 +49,14 @@ var gameQuestions = theDocument.childNodes[0];
    var questions = questionsCollection[0].textContent.toString();
    questionArray.push(questions);
    rightAnswersArray.push(rightAnswers);
-   falseAnswersArray.push(falseAnswers);
+   falseAnswersArrayFirst.push(falseAnswersFirst);
+   falseAnswersArraySecond.push(falseAnswersSecond);
  }
- console.log(questionArray);
- console.log(rightAnswersArray);
- console.log(falseAnswersArray);
+
+ console.log(questionArray)
+console.log(rightAnswersArray)
+console.log(falseAnswersArrayFirst)
+console.log(falseAnswersArraySecond)
 
 
 // create a single animated item and add to screen
@@ -99,7 +108,11 @@ function createBadge() {
 
 }
 
-
+// function for shuffeling elements in an array
+// used for suffeling the inputOptions
+function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+  }
 
 
 
@@ -107,14 +120,12 @@ function createBadge() {
 async function itemHandler(player, item) {
   item.kill();
   let randomQuestionIndex = Math.floor(Math.random() * questionArray.length);
-  let randomAnswersIndex = Math.floor(Math.random() * falseAnswersArray.length);
-  let randomQuestion = questionArray[randomQuestionIndex];
-  let randomAnswer = rightAnswersArray[randomQuestionIndex];
-  let inputOptions = falseAnswersArray.splice(0,randomAnswersIndex);
-  inputOptions.push(randomAnswer);
+  let inputOptions = [rightAnswersArray[randomQuestionIndex], falseAnswersArrayFirst[randomQuestionIndex], falseAnswersArraySecond[randomQuestionIndex]];
+
+  shuffle(inputOptions);
   const {value: usersChoiceIndex} = await Swal.fire({
     width: 600,
-    title: randomQuestion,
+    title: questionArray[randomQuestionIndex],
     input: 'radio',
     inputOptions: inputOptions,
     inputValidator: (value) => {
@@ -124,17 +135,23 @@ async function itemHandler(player, item) {
     }
   });
 
-  // Validation of the correct answer
-  if (inputOptions[usersChoiceIndex] === randomAnswer) {
-    currentScore = currentScore + 10;
-  } else {
-    createItem(getRandomInt(100,400), getRandomInt(200,500), 'coin');
-    attempts = attempts + 1;
-  }
-  if (currentScore === winningScore) {
-    createBadge();
-    Swal.fire('Good job!', 'Take the badge', 'success')
-  }
+      // Validation of the correct answer
+    if (rightAnswersArray.includes(inputOptions[usersChoiceIndex])){
+        currentScore = currentScore + 10;
+        rightAnswersArray.splice(rightAnswersArray.indexOf(inputOptions[usersChoiceIndex]), 1);
+        falseAnswersArrayFirst.splice(falseAnswersArrayFirst.indexOf(inputOptions), 1);
+        falseAnswersArraySecond.splice(falseAnswersArraySecond.indexOf(inputOptions), 1);
+        questionArray.splice(questionArray.indexOf(questionArray[randomQuestionIndex], 1));
+        // we could leave usedQuestions array out, but I leave it for now
+        // usedQuestions.push(inputOptions);
+      } else {
+        createItem(getRandomInt(100,400), getRandomInt(200,500), 'coin');
+        attempts = attempts + 1;
+      }
+      if (currentScore === winningScore) {
+        createBadge();
+        Swal.fire('Good job!', 'Take the badge', 'success')
+      }
 
 }
 
@@ -209,7 +226,9 @@ window.onload = function () {
     clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
     winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
     winningMessage.anchor.setTo(0.5, 1);
+/*
     time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
+*/
   }
 
 
@@ -218,14 +237,16 @@ window.onload = function () {
   function update() {
     text.text = "SCORE: " + currentScore;
     attemptsText.text = "WRONG: " + attempts;
+/*
     time.text = seconds + ":" + milliSec;
+*/
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
     // Timer
-    updateTime();
-    t = setTimeout(updateTime,1000000);
+    /*updateTime();
+    t = setTimeout(updateTime,1000000);*/
 
     // is the left cursor key pressed?
     if (cursors.left.isDown) {
@@ -255,14 +276,14 @@ window.onload = function () {
 
 
   // Update time
-  function updateTime() {
+ /* function updateTime() {
     milliSec++;
     if (milliSec >= 60) {
       milliSec = 0;
       seconds++
     }
 
-  }
+  }*/
 
   function render() {
   }

@@ -4,84 +4,84 @@
       <question>What does HTML stand for?</question>
       <rightanswer>Hyper Text Markup Language</rightanswer>
       <answer>Hyperlinks and Text Markup language</answer>
-      <answer>Home Tool Markup Language</answer>
+      <answer2>Home Tool Markup Language</answer2>
    </question>
 
     <question>
       <question>Who is making the Web standards?</question>
        <rightanswer>The world wide web Consortium</rightanswer>
       <answer>Mozilla</answer>
-      <answer>Google</answer>
+      <answer2>Google</answer2>
    </question>
 
     <question>
       <question>What is the correct HTML element for inserting a line break?</question>
       <rightanswer>br</rightanswer>
       <answer>lb</answer>
-      <answer>break></answer>
+      <answer2>break></answer2>
    </question>
 
     <question>
       <question>Which character is used to indicate an end tag?</question>
       <rightanswer>/></rightanswer>
       <answer>*</answer>
-      <answer> > </answer>
+      <answer2> > </answer2>
    </question>
 
     <question>
       <question>Inline elements are normally displayed without starting a new line.</question>
       <rightanswer>True</rightanswer>
       <answer>False</answer>
-      <answer>Sometimes</answer>
+      <answer2>Sometimes</answer2>
    </question>
 
     <question>
       <question>What is the correct HTML element for playing video files?</question>
       <rightanswer>video</rightanswer>
       <answer>media</answer>
-      <answer>movie</answer>
+      <answer2>movie</answer2>
    </question>
    
     <question>
       <question>What does XML stand for?</question>
       <rightanswer>eXtensible Markup Language</rightanswer>
       <answer>eXtra Modern Link</answer>
-      <answer>Example Markup Language</answer>
+      <answer2>Example Markup Language</answer2>
     </question>
 
     <question>
       <question>XML's goal is to replace HTML.</question>
       <rightanswer>False</rightanswer>
       <answer>True</answer>
-      <answer>In some specific cases</answer>
+      <answer2>In some specific cases</answer2>
     </question>
 
     <question>
       <question>There is a way of describing XML data, how?</question>
       <rightanswer>XML uses a DTD to describe the data.</rightanswer>
       <answer>XML uses a description node to describe data</answer>
-      <answer>XML uses XSL to describe data</answer>
+      <answer2>XML uses XSL to describe data</answer2>
     </question>
 
     <question>
       <question>What does DTD stand for?</question>
       <rightanswer>Document Type Definition</rightanswer>
       <answer>Dynamic Type Definition</answer>
-      <answer>Direct Type Definition</answer>
+      <answer2>Direct Type Definition</answer2>
     </question>
 
     <question>
       <question>XML elements cannot be empty</question>
       <rightanswer>False</rightanswer>
       <answer>True</answer>
-      <answer>Sometimes</answer>
+      <answer2>Sometimes</answer2>
     </question>
 
     <question>
       <question>What is an XML instance?</question>
       <rightanswer>An XML document</rightanswer>
       <answer>An XML attribute</answer>
-      <answer>An XML element</answer>
+      <answer2>An XML element</answer2>
     </question>
 
    
