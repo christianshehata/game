@@ -121,11 +121,13 @@ async function itemHandler(player, item) {
   item.kill();
   let randomQuestionIndex = Math.floor(Math.random() * questionArray.length);
   let inputOptions = [rightAnswersArray[randomQuestionIndex], falseAnswersArrayFirst[randomQuestionIndex], falseAnswersArraySecond[randomQuestionIndex]];
+  var randomQuestion = questionArray[randomQuestionIndex]
+
 
   shuffle(inputOptions);
   const {value: usersChoiceIndex} = await Swal.fire({
     width: 600,
-    title: questionArray[randomQuestionIndex],
+    title: randomQuestion,
     input: 'radio',
     inputOptions: inputOptions,
     inputValidator: (value) => {
@@ -138,10 +140,12 @@ async function itemHandler(player, item) {
       // Validation of the correct answer
     if (rightAnswersArray.includes(inputOptions[usersChoiceIndex])){
         currentScore = currentScore + 10;
-        rightAnswersArray.splice(rightAnswersArray.indexOf(inputOptions[usersChoiceIndex]), 1);
-        falseAnswersArrayFirst.splice(falseAnswersArrayFirst.indexOf(inputOptions), 1);
-        falseAnswersArraySecond.splice(falseAnswersArraySecond.indexOf(inputOptions), 1);
-        questionArray.splice(questionArray.indexOf(questionArray[randomQuestionIndex], 1));
+        console.log(inputOptions.splice(inputOptions[randomQuestionIndex], 1));
+        console.log(inputOptions.splice(falseAnswersArrayFirst[randomQuestionIndex], 1));
+        console.log(inputOptions.splice(falseAnswersArraySecond[randomQuestionIndex], 1));
+        /*console.log(inputOptions.splice(falseAnswersArrayFirst[randomQuestionIndex], 1));
+        console.log(falseAnswersArraySecond.splice(falseAnswersArraySecond[randomQuestionIndex], 1));
+        console.log(questionArray.splice(questionArray[randomQuestionIndex], 1));*/
         // we could leave usedQuestions array out, but I leave it for now
         // usedQuestions.push(inputOptions);
       } else {
