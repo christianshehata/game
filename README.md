@@ -1,4 +1,4 @@
 # game
- Simple JavaScript Teaching Game (Course: Corporate IT I)
+Library used: Phaser.js
 
  
