@@ -13,7 +13,7 @@ var loseMessage;
 var won = false;
 var lose = false;
 var currentScore = 0;
-var winningScore = 120;
+var winningScore = 90;
 var clickMeButton;
 var attempts = 0;
 var questionArray = [];
@@ -307,7 +307,7 @@ window.onload = function () {
     }
     
     if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
-      player.body.velocity.y = -400;
+      player.body.velocity.y = -650;
     }
     // when the player wins the game
     if (won) {
