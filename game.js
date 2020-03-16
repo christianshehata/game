@@ -53,10 +53,7 @@ var gameQuestions = theDocument.childNodes[0];
    falseAnswersArraySecond.push(falseAnswersSecond);
  }
 
-console.log(questionArray)
-console.log(rightAnswersArray)
-console.log(falseAnswersArrayFirst)
-console.log(falseAnswersArraySecond)
+
 
 
 // create a single animated item and add to screen
@@ -159,9 +156,15 @@ async function itemHandler(player, item) {
       // Validation of the correct answer
     if (rightAnswersArray.includes(inputOptions[usersChoiceIndex])){
         currentScore = currentScore + 10;
-        console.log(inputOptions.splice(inputOptions[randomQuestionIndex], 1));
-        console.log(inputOptions.splice(falseAnswersArrayFirst[randomQuestionIndex], 1));
-        console.log(inputOptions.splice(falseAnswersArraySecond[randomQuestionIndex], 1));
+        console.log(questionArray.splice(randomQuestionIndex, 1));
+        console.log(rightAnswersArray.splice(randomQuestionIndex, 1));
+        console.log(falseAnswersArrayFirst.splice(randomQuestionIndex, 1));
+        console.log(falseAnswersArraySecond.splice(randomQuestionIndex, 1));
+        console.log(questionArray)
+        console.log(rightAnswersArray)
+        console.log(falseAnswersArrayFirst)
+        console.log(falseAnswersArraySecond)
+
         /*console.log(inputOptions.splice(falseAnswersArrayFirst[randomQuestionIndex], 1));
         console.log(falseAnswersArraySecond.splice(falseAnswersArraySecond[randomQuestionIndex], 1));
         console.log(questionArray.splice(questionArray[randomQuestionIndex], 1));*/
