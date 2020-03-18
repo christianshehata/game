@@ -21,6 +21,7 @@ var rightAnswersArray = [];
 var falseAnswersArrayFirst = [];
 var falseAnswersArraySecond = [];
 var seconds = 0;
+var milliSec = 0;
 var time;
 var t;
 
@@ -242,7 +243,7 @@ window.onload = function () {
     // confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
     Swal.fire({
         icon: 'warning',
-        title: 'You failed, keep it up!',
+        title: 'You failed, keep it up!' +'\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
         text: 'Reload to play again 🚀',
         footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
     })
@@ -266,13 +267,11 @@ window.onload = function () {
     text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Permanent Marker", fill: "white" });
     attemptsText = game.add.text(740, 16, "WRONG: " + attemptsText, { font: "bold 24px Permanent Marker", fill: "white" });
     clickMeButton = game.add.button(16, 50, 'button', actionOnClick, this);
-    winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
+    winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 30px Permanent Marker", fill: "white" });
     winningMessage.anchor.setTo(0.5, 1);
     loseMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
     loseMessage.anchor.setTo(0.5, 1);
-/*
     time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
-*/
   }
 
 
@@ -281,16 +280,14 @@ window.onload = function () {
   function update() {
     text.text = "SCORE: " + currentScore;
     attemptsText.text = "WRONG: " + attempts;
-/*
     time.text = seconds + ":" + milliSec;
-*/
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
+
     // Timer
-    /*updateTime();
-    t = setTimeout(updateTime,1000000);*/
+    t =  setTimeout(updateTime);
 
     // is the left cursor key pressed?
     if (cursors.left.isDown) {
@@ -314,23 +311,25 @@ window.onload = function () {
     }
     // when the player wins the game
     if (won) {
-      winningMessage.text = 'YOU WON !! 😎'
+      clearTimeout(t);
+      winningMessage.text = 'YOU WON !! 😎 ' + 'You needed ' + seconds + ':' + milliSec
     } else if (lose) {
       loseOnClick();
       player.animations.stop();
+      clearTimeout(t)
     }
   }
 
 
   // Update time
- /* function updateTime() {
+  function updateTime() {
     milliSec++;
     if (milliSec >= 60) {
       milliSec = 0;
       seconds++
     }
 
-  }*/
+  }
 
   function render() {
   }
