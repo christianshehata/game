@@ -1,2 +1,4 @@
 # game
- Simple JavaScript Game
+Library used: Phaser.js
+
+ 
