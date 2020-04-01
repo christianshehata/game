@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<game-questions>
+   <question>
+      <question>What does HTML stand for?</question>
+      <rightanswer>Hyper Text Markup Language</rightanswer>
+      <answer>Hyperlinks and Text Markup language</answer>
+      <answer2>Home Tool Markup Language</answer2>
+   </question>
+
+    <question>
+      <question>Who is making the Web standards?</question>
+       <rightanswer>The world wide web Consortium</rightanswer>
+      <answer>Mozilla</answer>
+      <answer2>Google</answer2>
+   </question>
+
+    <question>
+      <question>What is the correct HTML element for inserting a line break?</question>
+      <rightanswer>br</rightanswer>
+      <answer>lb</answer>
+      <answer2>break></answer2>
+   </question>
+
+    <question>
+      <question>Which character is used to indicate an end tag?</question>
+      <rightanswer>/></rightanswer>
+      <answer>*</answer>
+      <answer2> > </answer2>
+   </question>
+
+    <question>
+      <question>Inline elements are normally displayed without starting a new line.</question>
+      <rightanswer>Wahr</rightanswer>
+      <answer>Falsch</answer>
+      <answer2>In ausnahme Fällen möglich</answer2>
+   </question>
+
+    <question>
+      <question>What is the correct HTML element for playing video files?</question>
+      <rightanswer>video</rightanswer>
+      <answer>media</answer>
+      <answer2>movie</answer2>
+   </question>
+   
+    <question>
+      <question>What does XML stand for?</question>
+      <rightanswer>eXtensible Markup Language</rightanswer>
+      <answer>eXtra Modern Link</answer>
+      <answer2>Example Markup Language</answer2>
+    </question>
+
+    <question>
+      <question>XML's goal is to replace HTML.</question>
+      <rightanswer>False</rightanswer>
+      <answer>True</answer>
+      <answer2>In some specific cases</answer2>
+    </question>
+
+    <question>
+      <question>There is a way of describing XML data, how?</question>
+      <rightanswer>XML uses a DTD to describe the data.</rightanswer>
+      <answer>XML uses a description node to describe data</answer>
+      <answer2>XML uses XSL to describe data</answer2>
+    </question>
+
+    <question>
+      <question>What does DTD stand for?</question>
+      <rightanswer>Document Type Definition</rightanswer>
+      <answer>Dynamic Type Definition</answer>
+      <answer2>Direct Type Definition</answer2>
+    </question>
+
+    <question>
+      <question>XML elements cannot be empty</question>
+      <rightanswer>False</rightanswer>
+      <answer>True</answer>
+      <answer2>Sometimes</answer2>
+    </question>
+
+    <question>
+      <question>What is an XML instance?</question>
+      <rightanswer>An XML document</rightanswer>
+      <answer>An XML attribute</answer>
+      <answer2>An XML element</answer2>
+    </question>
+
+    <question>
+      <question>For what OWL stand for?</question>
+      <rightanswer>Web Ontology Language</rightanswer>
+      <answer>Ontology Web Language</answer>
+      <answer2>Language Ontology Web</answer2>
+    </question>
+
+    <question>
+      <question>RDF is?</question>
+      <rightanswer>Resource Description Framework</rightanswer>
+      <answer>Record Description Framework</answer>
+      <answer2>Resource Developement Framework</answer2>
+    </question>
+
+    <question>
+      <question>RDF uses _____ to identify resources.</question>
+      <rightanswer>Web identifiers</rightanswer>
+      <answer>IP Address</answer>
+      <answer2>Mac Address</answer2>
+    </question>
+
+    <question>
+      <question>In RDF the proper elements can also defined as ______</question>
+      <rightanswer>attributes</rightanswer>
+      <answer>functions</answer>
+      <answer2>modules</answer2>
+    </question>
+
+    <question>
+      <question>RDF became a W3C Recommendation in ____</question>
+      <rightanswer>Feb 2004</rightanswer>
+      <answer>Feb 2005</answer>
+      <answer2>Mär 2007</answer2>
+    </question>
+    
+    <question>
+      <question>The combination of a Resource, a Property, and a Property value forms a</question>
+      <rightanswer>statement</rightanswer>
+      <answer>Program</answer>
+      <answer2>Function</answer2>
+    </question>
+
+    <question>
+      <question>The RDF is written in ____</question>
+      <rightanswer>XML </rightanswer>
+      <answer>XHTML</answer>
+      <answer2>XSLT</answer2>
+    </question>
+
+    <question>
+      <question>A Property value is the value of a _____</question>
+      <rightanswer>Property</rightanswer>
+      <answer>Resource</answer>
+      <answer2>Value</answer2>
+    </question>
+
+    <question>
+      <question>RDF ______ are used to describe group of things.</question>
+      <rightanswer>containers</rightanswer>
+      <answer>Values</answer>
+      <answer2>Attributes</answer2>
+    </question>
+
+    <question>
+      <question>RDF Schema does not provide actual application-specific ______</question>
+      <rightanswer>classes and properties</rightanswer>
+      <answer>functions and properties</answer>
+      <answer2>files and properties</answer2>
+    </question>
+
+</game-questions>

@@ -29,7 +29,7 @@ var t;
 
 // Connecting our 'database' with our cool game ._.
 var connect = new XMLHttpRequest();
-connect.open('GET', 'FragenKatalog.xsd', false);
+connect.open('GET', 'Fragen.xsd', false);
 connect.setRequestHeader('Content-Type', "text/xml");
 connect.send(null);
 var theDocument = connect.responseXML;
@@ -119,14 +119,14 @@ function addPlatforms() {
 // create the winning badge and add to screen
 function createBadge() {
   badges = game.add.physicsGroup();
-  var badge = badges.create(150, 150, 'badge');
+  var badge = badges.create(350, 250, 'badge');
   badge.animations.add('spin');
   badge.animations.play('spin', 10, true);
 
 }
 
 // function for shuffeling elements in an array
-// used for suffeling the inputOptions
+// used for shuffeling the inputOptions
 function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
   }
@@ -138,7 +138,7 @@ async function itemHandler(player, item) {
   item.kill();
   let randomQuestionIndex = Math.floor(Math.random() * questionArray.length);
   let inputOptions = [rightAnswersArray[randomQuestionIndex], falseAnswersArrayFirst[randomQuestionIndex], falseAnswersArraySecond[randomQuestionIndex]];
-  var randomQuestion = questionArray[randomQuestionIndex]
+  var randomQuestion = questionArray[randomQuestionIndex];
 
 
   shuffle(inputOptions);
@@ -161,10 +161,10 @@ async function itemHandler(player, item) {
         console.log(rightAnswersArray.splice(randomQuestionIndex, 1));
         console.log(falseAnswersArrayFirst.splice(randomQuestionIndex, 1));
         console.log(falseAnswersArraySecond.splice(randomQuestionIndex, 1));
-        console.log(questionArray)
-        console.log(rightAnswersArray)
-        console.log(falseAnswersArrayFirst)
-        console.log(falseAnswersArraySecond)
+        console.log(questionArray);
+        console.log(rightAnswersArray);
+        console.log(falseAnswersArrayFirst);
+        console.log(falseAnswersArraySecond);
 
         /*console.log(inputOptions.splice(falseAnswersArrayFirst[randomQuestionIndex], 1));
         console.log(falseAnswersArraySecond.splice(falseAnswersArraySecond[randomQuestionIndex], 1));
@@ -172,7 +172,7 @@ async function itemHandler(player, item) {
         // we could leave usedQuestions array out, but I leave it for now
         // usedQuestions.push(inputOptions);
       } else {
-        createItem(getRandomInt(100,400), getRandomInt(200,500), 'coin');
+        createItem(getRandomInt(50,500), getRandomInt(50,500), 'coin');
         attempts = attempts + 1;
         if (attempts === 5) {
           lose = true;
@@ -229,7 +229,6 @@ window.onload = function () {
 });
 
   function actionOnClick() {
-    // confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
     Swal.fire({
         icon: 'info',
         title: 'Instruction',
@@ -240,7 +239,6 @@ window.onload = function () {
 
   //Lose message
   function loseOnClick() {
-    // confirm('So this is the first level: HTML and you have come to challenge me for knowledge. Come at me bra!')
     Swal.fire({
         icon: 'warning',
         title: 'You failed, keep it up!' +'\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
@@ -315,7 +313,6 @@ window.onload = function () {
       winningMessage.text = 'YOU WON !! 😎 ' + 'You needed ' + seconds + ':' + milliSec
     } else if (lose) {
       loseOnClick();
-      player.animations.stop();
       clearTimeout(t)
     }
   }
