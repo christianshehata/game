@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+<style>
+img {width: 70px; height: 70px; margin-left: 300px;}
+form {text-align: center;}
+</style>
+
+<script>
+
+function validateForm(){
+
+var x = document.forms["myForm"]["fname"].value;
+
+if (x == "") {
+
+  alert("Don't be shy! You must enter your name please :)");
+
+  return false;
+
+}
+
+}
+
+</script>
+
+</head>
+
+
+
+<body>
+
+  <p style="font-size: 200%;">
+  <br>
+  <br>
+
+  Welcome to Corporate IT Game
+  </p>
+
+  <br>
+
+  <p>
+    Let the game begin, but first please enter your name
+    <br>
+    <br>
+    <br>
+  </p>
+
+
+
+
+
+
+<form name="myForm" action="secondpage2.html" onsubmit="return validateForm()" method="post">
+
+  Name: <input type="text" name="fname"> <br>
+
+  <input type="submit" value="Send!">
+
+</form>
+
+
+
+
+
+<img src="chalkers1.jpeg">
+
+
+</body>
+
+</html>
