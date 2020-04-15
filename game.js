@@ -214,8 +214,10 @@ window.onload = function () {
     game.load.spritesheet('button', 'instructions.png', 32, 32);
 
     // Load sounds
-    game.load.audio('coin_sammeln', 'Sounds/Coin3.wav');
-    game.load.audio('jump', 'Sounds/Jump1.wav');
+    game.load.audio('coin_sammeln', 'Sounds/Coin3.mp3');
+    game.load.audio('jump', 'Sounds/Jump1.mp3');
+    game.load.audio('step', 'Sounds/Step.mp3');
+    game.load.audio('background', 'Sound/Background.mp3');
 
   }
 
@@ -277,6 +279,10 @@ window.onload = function () {
     loseMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Permanent Marker", fill: "white" });
     loseMessage.anchor.setTo(0.5, 1);
     time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
+
+    //Music 
+    music = game.add.audio("background");
+    music.play('', 0, 1, true);
   }
 
 
@@ -299,12 +305,16 @@ window.onload = function () {
       player.animations.play('walk', 10, true);
       player.body.velocity.x = -300;
       player.scale.x = - 1;
+      var snd_stepleft = game.add.audio('step');
+      snd_stepleft.play();
     }
     // is the right cursor key pressed?
     else if (cursors.right.isDown) {
       player.animations.play('walk', 10, true);
       player.body.velocity.x = 300;
       player.scale.x = 1;
+      var snd_stepright = game.add.audio('step');
+      snd_stepright.play();
     }
     // player doesn't move
     else {
