@@ -217,7 +217,7 @@ window.onload = function () {
     game.load.audio('coin_sammeln', 'Sounds/Coin3.mp3');
     game.load.audio('jump', 'Sounds/Jump1.mp3');
     game.load.audio('step', 'Sounds/Step.mp3');
-    game.load.audio('background', 'Sound/Background.mp3');
+    game.load.audio('background', 'Sounds/Background.mp3');
 
   }
 
@@ -265,6 +265,10 @@ window.onload = function () {
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 500;
+  
+  
+
+        
 
     addItems();
     addPlatforms();
@@ -280,9 +284,7 @@ window.onload = function () {
     loseMessage.anchor.setTo(0.5, 1);
     time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
 
-    //Music 
-    music = game.add.audio("background");
-    music.play('', 0, 1, true);
+    
   }
 
 
@@ -297,6 +299,12 @@ window.onload = function () {
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
 
+    //Music 
+    var snd_backmusic = game.add.audio("background");
+    snd_backmusic.play('', 0, 0.001, true);
+
+    
+
     // Timer
     t =  setTimeout(updateTime);
 
@@ -306,7 +314,8 @@ window.onload = function () {
       player.body.velocity.x = -300;
       player.scale.x = - 1;
       var snd_stepleft = game.add.audio('step');
-      snd_stepleft.play();
+      snd_stepleft.play('',0 ,0.2, false);
+
     }
     // is the right cursor key pressed?
     else if (cursors.right.isDown) {
@@ -314,7 +323,8 @@ window.onload = function () {
       player.body.velocity.x = 300;
       player.scale.x = 1;
       var snd_stepright = game.add.audio('step');
-      snd_stepright.play();
+      snd_stepright.play('',0 , 0.2, false);
+
     }
     // player doesn't move
     else {
