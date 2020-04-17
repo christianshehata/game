@@ -190,11 +190,11 @@ async function itemHandler(player, item) {
 
 // when the player collects the badge at the end of the game
 function badgeHandler(player, badge) {
-  current_playing_back = false
+  //Winsound
   if(!current_playing_win) {
     current_playing_win = true
     var snd_win = game.add.audio('winsound');
-    snd_win.play('',0 ,0.8, false);
+    snd_win.play('',0 ,0.7, false);
   }  
   badge.kill();
   won = true;
