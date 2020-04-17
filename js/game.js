@@ -24,12 +24,12 @@ var seconds = 0;
 var milliSec = 0;
 var time;
 var t;
-
+var usersName = '';
 
 
 // Connecting our 'database' with our cool game ._.
 var connect = new XMLHttpRequest();
-connect.open('GET', 'xml/Fragen.xsd', false);
+connect.open('GET', 'xml/FragenKatalog.xsd', false);
 connect.setRequestHeader('Content-Type', "text/xml");
 connect.send(null);
 var theDocument = connect.responseXML;
@@ -154,6 +154,7 @@ async function itemHandler(player, item) {
     }
   });
 
+
       // Validation of the correct answer
     if (rightAnswersArray.includes(inputOptions[usersChoiceIndex])){
         currentScore = currentScore + 10;
@@ -207,27 +208,58 @@ window.onload = function () {
     game.load.spritesheet('badge', 'assets/images/badge.png', 42, 54);
     game.load.spritesheet('button', 'assets/images/instructions.png', 32, 32);
 
+    namePopUp();
+
   }
 
-  // Initial PopUp for information reasons before the game loads
-  Swal.fire({
-  title: 'Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?',
-  width: 600,
-  padding: '3em',
-  background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
-  backdrop: `
-    rgba(0,0,123,0.4)
-    url("https://sweetalert2.github.io/images/nyan-cat.gif")
-    left top
-    no-repeat
-  `
-});
+  // Second PopUp for information reasons before the game loads
+  function informationPopUp() {
+    Swal.fire({
+      title: 'Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?',
+      width: 600,
+      padding: '3em',
+      background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("https://sweetalert2.github.io/images/nyan-cat.gif")
+        left top
+        no-repeat
+      `,
+        confirmButtonText: 'Continue',
+      });
+  }
 
+  // Initial PopUp saving users name
+  function namePopUp() {
+     const { value: name } = Swal.fire({
+        title: 'Enter your name',
+        input: 'text',
+        inputValue: '',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return 'You need to write something!'
+          } else {
+            usersName += value;
+            console.log(usersName)
+          }
+        }
+      })
+    const enterNameModal = document.getElementsByClassName('swal2-popup swal2-modal swal2-show')[0];
+    enterNameModal.addEventListener('click', (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      informationPopUp()
+    }
+  })
+  }
+
+
+  // Instruction PopUp
   function actionOnClick() {
     Swal.fire({
         icon: 'info',
         title: 'Instruction',
-        text: 'Welcome to your first level: HTML 🧐 Answer the questions by collecting the coins!',
+        text: 'Welcome to your first level: HTML 🧐 Answer the questions by collecting the coins!' + 'Good Luck ' + usersName,
         footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
     })
   }
@@ -236,7 +268,7 @@ window.onload = function () {
   function loseOnClick() {
     Swal.fire({
         icon: 'warning',
-        title: 'You failed, keep it up!' +'\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
+        title: 'You failed, keep it up ' + usersName +'!' +'\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
         text: 'Reload to play again 🚀',
         footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
     })
@@ -273,14 +305,14 @@ window.onload = function () {
   function update() {
     text.text = "SCORE: " + currentScore;
     attemptsText.text = "WRONG: " + attempts;
-    time.text = seconds + ":" + milliSec;
+    // time.text = seconds + ":" + milliSec;
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
 
     // Timer
-    t =  setTimeout(updateTime);
+    // t =  setTimeout(updateTime);
 
     // is the left cursor key pressed?
     if (cursors.left.isDown) {
@@ -305,7 +337,7 @@ window.onload = function () {
     // when the player wins the game
     if (won) {
       clearTimeout(t);
-      winningMessage.text = 'YOU WON !! 😎 ' + 'You needed ' + seconds + ':' + milliSec
+      winningMessage.text = 'YOU WON ' + usersName + '!! 😎'  + 'You needed ' + seconds + ':' + milliSec
     } else if (lose) {
       loseOnClick();
       clearTimeout(t)
