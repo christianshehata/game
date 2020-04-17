@@ -25,6 +25,8 @@ var milliSec = 0;
 var time;
 var t;
 var usersName = '';
+var current_playing_back = false
+var current_playing_win = false
 
 
 // Connecting our 'database' with our cool game ._.
@@ -183,6 +185,12 @@ async function itemHandler(player, item) {
 
 // when the player collects the badge at the end of the game
 function badgeHandler(player, badge) {
+  // Winsound
+  if(!current_playing_win) {
+    current_playing_win = true
+    var snd_win = game.add.audio('winsound');
+    snd_win.play('',0 ,0.7, false);
+  }
   badge.kill();
   won = true;
 }
@@ -201,7 +209,7 @@ window.onload = function () {
     //Load images
     game.load.image('platform', 'assets/images/platform_1.png');
     
-    //Load spritesheets
+    // Load spritesheets
     game.load.spritesheet('player', 'assets/images/chalkers.png', 48, 62);
     game.load.spritesheet('coin', 'assets/images/coin.png', 36, 44);
     game.load.spritesheet('question', 'assets/images/question.png', 36, 44);
@@ -209,6 +217,13 @@ window.onload = function () {
     game.load.spritesheet('button', 'assets/images/instructions.png', 32, 32);
 
     namePopUp();
+
+    // Load sounds
+    game.load.audio('coin_sammeln', ['assets/sounds/Coin3.ogg', 'assets/sounds/Coin3.mp3']);
+    game.load.audio('jump', ['assets/sounds/Jump1.ogg', 'assets/sounds/Jump1.mp3']);
+    game.load.audio('step', ['assets/sounds/Step.ogg', 'assets/sounds/Step.mp3']);
+    game.load.audio('background', ['assets/sounds/Background.ogg', 'assets/sounds/Background.mp3']);
+    game.load.audio('winsound', ['assets/sounds/Winsound.ogg', 'assets/sounds/Winsound.mp3']);
 
   }
 
@@ -314,17 +329,29 @@ window.onload = function () {
     // Timer
     // t =  setTimeout(updateTime);
 
+     //Music
+    if(!current_playing_back) {
+      current_playing_back = true
+      var snd_back = game.add.audio('background');
+      snd_back.play('',0 ,0.3, true);
+    }
+
     // is the left cursor key pressed?
     if (cursors.left.isDown) {
       player.animations.play('walk', 10, true);
       player.body.velocity.x = -300;
       player.scale.x = - 1;
+      var snd_stepleft = game.add.audio('step');
+      snd_stepleft.play('',0 ,0.2, false);
+
     }
     // is the right cursor key pressed?
     else if (cursors.right.isDown) {
       player.animations.play('walk', 10, true);
       player.body.velocity.x = 300;
       player.scale.x = 1;
+      var snd_stepright = game.add.audio('step');
+      snd_stepright.play('',0 ,0.2, false);
     }
     // player doesn't move
     else {
@@ -332,6 +359,8 @@ window.onload = function () {
     }
     
     if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
+      var snd_jump = game.add.audio('jump');
+      snd_jump.play();
       player.body.velocity.y = -650;
     }
     // when the player wins the game
