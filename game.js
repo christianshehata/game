@@ -25,6 +25,7 @@ var milliSec = 0;
 var time;
 var t;
 var current_playing_back = false
+var current_playing_win = false
 
 
 // Connecting our 'database' with our cool game ._.
@@ -189,6 +190,12 @@ async function itemHandler(player, item) {
 
 // when the player collects the badge at the end of the game
 function badgeHandler(player, badge) {
+  current_playing_back = false
+  if(!current_playing_win) {
+    current_playing_win = true
+    var snd_win = game.add.audio('winsound');
+    snd_win.play('',0 ,0.8, false);
+  }  
   badge.kill();
   won = true;
 }
@@ -215,11 +222,12 @@ window.onload = function () {
     game.load.spritesheet('button', 'instructions.png', 32, 32);
 
     // Load sounds
-    game.load.audio('coin_sammeln', 'Sounds/Coin3.ogg');
-    game.load.audio('jump', 'Sounds/Jump1.ogg');
-    game.load.audio('step', 'Sounds/Step.ogg');
-    game.load.audio('background', 'Sounds/Background.ogg');
-
+    game.load.audio('coin_sammeln', ['Sounds/Coin3.ogg', 'Sounds/Coin3.mp3']);
+    game.load.audio('jump', ['Sounds/Jump1.ogg', 'Soungs/Jump1.mp3']);
+    game.load.audio('step', ['Sounds/Step.ogg', 'Sounds/Step.mp3']);
+    game.load.audio('background', ['Sounds/Background.ogg', 'Sounds/Background.mp3']);
+    game.load.audio('winsound', ['Sounds/Winsound.ogg', 'Sounds/Winsound.mp3']);
+    
   }
 
   // Initial PopUp for information reasons before the game loads
@@ -340,6 +348,7 @@ window.onload = function () {
     if (won) {
       clearTimeout(t);
       winningMessage.text = 'YOU WON !! 😎 ' + 'You needed ' + seconds + ':' + milliSec
+      
     } else if (lose) {
       loseOnClick();
       player.animations.stop();
