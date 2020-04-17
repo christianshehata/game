@@ -223,7 +223,7 @@ window.onload = function () {
 
     // Load sounds
     game.load.audio('coin_sammeln', ['Sounds/Coin3.ogg', 'Sounds/Coin3.mp3']);
-    game.load.audio('jump', ['Sounds/Jump1.ogg', 'Soungs/Jump1.mp3']);
+    game.load.audio('jump', ['Sounds/Jump1.ogg', 'Sounds/Jump1.mp3']);
     game.load.audio('step', ['Sounds/Step.ogg', 'Sounds/Step.mp3']);
     game.load.audio('background', ['Sounds/Background.ogg', 'Sounds/Background.mp3']);
     game.load.audio('winsound', ['Sounds/Winsound.ogg', 'Sounds/Winsound.mp3']);
