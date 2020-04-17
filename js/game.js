@@ -13,7 +13,7 @@ var loseMessage;
 var won = false;
 var lose = false;
 var currentScore = 0;
-var winningScore = 90;
+var winningScore = 70;
 var clickMeButton;
 var attempts = 0;
 var questionArray = [];
@@ -240,7 +240,7 @@ window.onload = function() {
         Swal.fire({
             icon: 'info',
             title: 'Instruction',
-            text: 'Welcome to your first level: HTML 🧐 Answer the questions by collecting the coins!' + 'Good Luck ' + usersName,
+            text: 'Welcome to the Corporate IT game. 🧐 Answer the questions by collecting the coins!' + 'Good Luck ' + usersName,
             footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
         })
     }
@@ -317,7 +317,7 @@ window.onload = function() {
         // when the player wins the game
         if (won) {
             clearTimeout(t);
-            winningMessage.text = 'YOU WON ' + usersName + '!! 😎' + 'You needed ' + seconds + ':' + milliSec
+            winningMessage.text = 'YOU WON ' + usersName + '!! 😎' + 'Time left: ' + seconds + ':' + milliSec
         } else if (lose) {
             loseOnClick();
             clearTimeout(t)
