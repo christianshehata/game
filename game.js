@@ -24,6 +24,7 @@ var seconds = 0;
 var milliSec = 0;
 var time;
 var t;
+var current_playing_back = false
 
 
 // Connecting our 'database' with our cool game ._.
@@ -214,10 +215,10 @@ window.onload = function () {
     game.load.spritesheet('button', 'instructions.png', 32, 32);
 
     // Load sounds
-    game.load.audio('coin_sammeln', 'Sounds/Coin3.mp3');
-    game.load.audio('jump', 'Sounds/Jump1.mp3');
-    game.load.audio('step', 'Sounds/Step.mp3');
-    game.load.audio('background', 'Sounds/Background.mp3');
+    game.load.audio('coin_sammeln', 'Sounds/Coin3.ogg');
+    game.load.audio('jump', 'Sounds/Jump1.ogg');
+    game.load.audio('step', 'Sounds/Step.ogg');
+    game.load.audio('background', 'Sounds/Background.ogg');
 
   }
 
@@ -265,10 +266,6 @@ window.onload = function () {
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 500;
-  
-  
-
-        
 
     addItems();
     addPlatforms();
@@ -284,7 +281,7 @@ window.onload = function () {
     loseMessage.anchor.setTo(0.5, 1);
     time = game.add.text(350, 16, seconds + ":" + milliSec, { font: "bold 24px Permanent Marker", fill: "white" });
 
-    
+
   }
 
 
@@ -299,12 +296,14 @@ window.onload = function () {
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
 
-    //Music 
-    var snd_backmusic = game.add.audio("background");
-    snd_backmusic.play('', 0, 0.001, true);
+    //Music
+    if(!current_playing_back) {
+      current_playing_back = true
+      var snd_back = game.add.audio('background');
+      snd_back.play('',0 ,0.3, true);
+    }  
 
     
-
     // Timer
     t =  setTimeout(updateTime);
 
@@ -314,7 +313,7 @@ window.onload = function () {
       player.body.velocity.x = -300;
       player.scale.x = - 1;
       var snd_stepleft = game.add.audio('step');
-      snd_stepleft.play('',0 ,0.2, false);
+      snd_stepleft.play('',0 ,0.2, false);  
 
     }
     // is the right cursor key pressed?
@@ -323,8 +322,8 @@ window.onload = function () {
       player.body.velocity.x = 300;
       player.scale.x = 1;
       var snd_stepright = game.add.audio('step');
-      snd_stepright.play('',0 , 0.2, false);
-
+      snd_stepright.play('',0 ,0.2, false);
+    
     }
     // player doesn't move
     else {
@@ -346,6 +345,8 @@ window.onload = function () {
       player.animations.stop();
       clearTimeout(t)
     }
+
+    
   }
 
 
