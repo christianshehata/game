@@ -32,7 +32,7 @@
       <question>Inline elements are normally displayed without starting a new line.</question>
       <rightanswer>True</rightanswer>
       <answer>False</answer>
-      <answer2>Sometimes</answer2>
+      <answer2>Sometimes possible</answer2>
    </question>
 
     <question>
@@ -84,15 +84,74 @@
       <answer2>An XML element</answer2>
     </question>
 
-   
+    <question>
+      <question>For what OWL stand for?</question>
+      <rightanswer>Web Ontology Language</rightanswer>
+      <answer>Ontology Web Language</answer>
+      <answer2>Language Ontology Web</answer2>
+    </question>
 
+    <question>
+      <question>RDF is?</question>
+      <rightanswer>Resource Description Framework</rightanswer>
+      <answer>Record Description Framework</answer>
+      <answer2>Resource Developement Framework</answer2>
+    </question>
 
+    <question>
+      <question>RDF uses _____ to identify resources.</question>
+      <rightanswer>Web identifiers</rightanswer>
+      <answer>IP Address</answer>
+      <answer2>Mac Address</answer2>
+    </question>
 
+    <question>
+      <question>In RDF the proper elements can also defined as ______</question>
+      <rightanswer>attributes</rightanswer>
+      <answer>functions</answer>
+      <answer2>modules</answer2>
+    </question>
 
+    <question>
+      <question>RDF became a W3C Recommendation in ____</question>
+      <rightanswer>Feb 2004</rightanswer>
+      <answer>Feb 2005</answer>
+      <answer2>Mär 2007</answer2>
+    </question>
+    
+    <question>
+      <question>The combination of a Resource, a Property, and a Property value forms a</question>
+      <rightanswer>statement</rightanswer>
+      <answer>Program</answer>
+      <answer2>Function</answer2>
+    </question>
 
+    <question>
+      <question>The RDF is written in ____</question>
+      <rightanswer>XML </rightanswer>
+      <answer>XHTML</answer>
+      <answer2>XSLT</answer2>
+    </question>
 
+    <question>
+      <question>A Property value is the value of a _____</question>
+      <rightanswer>Property</rightanswer>
+      <answer>Resource</answer>
+      <answer2>Value</answer2>
+    </question>
 
+    <question>
+      <question>RDF ______ are used to describe group of things.</question>
+      <rightanswer>containers</rightanswer>
+      <answer>Values</answer>
+      <answer2>Attributes</answer2>
+    </question>
 
-   
+    <question>
+      <question>RDF Schema does not provide actual application-specific ______</question>
+      <rightanswer>classes and properties</rightanswer>
+      <answer>functions and properties</answer>
+      <answer2>files and properties</answer2>
+    </question>
 
 </game-questions>
