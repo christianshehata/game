@@ -20,8 +20,6 @@ var questionArray = [];
 var rightAnswersArray = [];
 var falseAnswersArrayFirst = [];
 var falseAnswersArraySecond = [];
-// var seconds = 10;
-// var milliSec = 0;
 var time;
 var t;
 var usersName = '';
