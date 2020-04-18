@@ -209,7 +209,6 @@ window.onload = function() {
     }
 
     // Second PopUp for information reasons before the game loads
-    function informationPopUp() {
         Swal.fire({
             title: 'Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?',
             width: 600,
@@ -223,7 +222,7 @@ window.onload = function() {
       `,
             confirmButtonText: 'Continue',
         });
-    }
+
 
     //Time running out
     function noTime() {
@@ -327,7 +326,7 @@ window.onload = function() {
 
     // Update time
     function updateTime() {
-        if (milliSec == 0 && seconds == 0) {
+        if (milliSec === 0 && seconds === 0) {
             noTime();
             clearTimeout(t);
             return
