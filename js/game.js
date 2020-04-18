@@ -23,6 +23,7 @@ var falseAnswersArraySecond = [];
 var time;
 var t;
 var usersName = '';
+var current_playing_back = false
 
 
 // Connecting our 'database' with our cool game ._.
@@ -134,6 +135,8 @@ function shuffle(array) {
 // when the player collects an item on the screen
 async function itemHandler(player, item) {
     item.kill();
+    var snd_coins = game.add.audio('coin_sammeln');
+    snd_coins.play(); 
     let randomQuestionIndex = Math.floor(Math.random() * questionArray.length);
     let inputOptions = [rightAnswersArray[randomQuestionIndex], falseAnswersArrayFirst[randomQuestionIndex], falseAnswersArraySecond[randomQuestionIndex]];
     var randomQuestion = questionArray[randomQuestionIndex];
@@ -205,6 +208,13 @@ window.onload = function() {
         game.load.spritesheet('question', 'assets/images/question.png', 36, 44);
         game.load.spritesheet('badge', 'assets/images/badge.png', 42, 54);
         game.load.spritesheet('button', 'assets/images/instructions.png', 32, 32);
+
+        //Load Music
+        game.load.audio('coin_sammeln', ['assets/sounds/Coin3.ogg', 'assets/sounds/Coin3.mp3']);
+        game.load.audio('jump', ['assets/sounds/Jump1.ogg', 'assets/sounds/Jump1.mp3']);
+        game.load.audio('step', ['assets/sounds/Step.ogg', 'assets/sounds/Step.mp3']);
+        game.load.audio('background', ['assets/sounds/Background.ogg', 'assets/sounds/Background.mp3']);
+        game.load.audio('winsound', ['assets/sounds/Winsound.ogg', 'assets/sounds/Winsound.mp3']);
 
     }
 
@@ -293,6 +303,12 @@ window.onload = function() {
         player.body.velocity.x = 0;
         // Timer
         t = setTimeout(updateTime);
+        //Background Music
+        if(!current_playing_back) {
+            current_playing_back = true
+            var snd_back = game.add.audio('background');
+            snd_back.play('',0 ,0.3, true);
+        }  
 
         // is the left cursor key pressed?
         if (cursors.left.isDown) {
@@ -310,9 +326,12 @@ window.onload = function() {
         else {
             player.animations.stop();
         }
-
+        //player Jumps
         if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
             player.body.velocity.y = -650;
+            //Jumpsound
+            var snd_jump = game.add.audio('jump');
+            snd_jump.play();
         }
         // when the player wins the game
         if (won) {
