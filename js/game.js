@@ -13,7 +13,7 @@ var loseMessage;
 var won = false;
 var lose = false;
 var currentScore = 0;
-var winningScore = 70;
+var winningScore = 90;
 var clickMeButton;
 var attempts = 0;
 var questionArray = [];
@@ -23,6 +23,8 @@ var falseAnswersArraySecond = [];
 var time;
 var t;
 var usersName = '';
+var current_playing_back = false
+var current_playing_win = false
 
 
 // Connecting our 'database' with our cool game ._.
@@ -183,6 +185,14 @@ async function itemHandler(player, item) {
 function badgeHandler(player, badge) {
     badge.kill();
     won = true;
+    //Winsound
+  if(!current_playing_win) {
+    current_playing_win = true
+    var snd_win = game.add.audio('winsound');
+    snd_win.play('',0 ,0.7, false);
+  }
+  badge.kill();
+  won = true;
 }
 
 
@@ -206,9 +216,15 @@ window.onload = function() {
         game.load.spritesheet('badge', 'assets/images/badge.png', 42, 54);
         game.load.spritesheet('button', 'assets/images/instructions.png', 32, 32);
 
+        // Load sounds
+        game.load.audio('coin_sammeln', ['assets/sounds/Coin3.ogg', 'assets/sounds/Coin3.mp3']);
+        game.load.audio('jump', ['assets/sounds/Jump1.ogg', 'assets/sounds/Jump1.mp3']);
+        game.load.audio('background', ['assets/sounds/Background.ogg', 'assets/sounds/Background.mp3']);
+        game.load.audio('winsound', ['assets/sounds/Winsound.ogg', 'assets/sounds/Winsound.mp3']);
+
     }
 
-    // Second PopUp for information reasons before the game loads
+    // PopUp for information reasons before the game loads
         Swal.fire({
             title: 'Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. U ready ?',
             width: 600,
@@ -248,7 +264,7 @@ window.onload = function() {
     function loseOnClick() {
         Swal.fire({
             icon: 'warning',
-            title: 'You failed, keep it up ' + usersName + '!' + '\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
+            title: 'You failed, keep it up!' + '\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
             text: 'Reload to play again 🚀',
             footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
         })
@@ -290,6 +306,14 @@ window.onload = function() {
         game.physics.arcade.overlap(player, items, itemHandler);
         game.physics.arcade.overlap(player, badges, badgeHandler);
         player.body.velocity.x = 0;
+
+          //Music
+        if(!current_playing_back) {
+          current_playing_back = true;
+          var snd_back = game.add.audio('background');
+          snd_back.play('',0 ,0.3, true);
+        }
+
         // Timer
         t = setTimeout(updateTime);
 
@@ -298,12 +322,16 @@ window.onload = function() {
             player.animations.play('walk', 10, true);
             player.body.velocity.x = -300;
             player.scale.x = -1;
+            var snd_stepleft = game.add.audio('step');
+            snd_stepleft.play('',0 ,0.2, false);
         }
         // is the right cursor key pressed?
         else if (cursors.right.isDown) {
             player.animations.play('walk', 10, true);
             player.body.velocity.x = 300;
             player.scale.x = 1;
+            var snd_stepright = game.add.audio('step');
+            snd_stepright.play('',0 ,0.2, false);
         }
         // player doesn't move
         else {
@@ -311,14 +339,17 @@ window.onload = function() {
         }
 
         if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
-            player.body.velocity.y = -650;
+            var snd_jump = game.add.audio('jump');
+            snd_jump.play();
+            player.body.velocity.y = -450;
         }
         // when the player wins the game
         if (won) {
             clearTimeout(t);
-            winningMessage.text = 'YOU WON ' + usersName + '!! 😎' + 'Time left: ' + seconds + ':' + milliSec
+            winningMessage.text = 'YOU WON ' + '!! 😎' + 'Time left: ' + seconds + ':' + milliSec
         } else if (lose) {
             loseOnClick();
+            player.animations.stop()
             clearTimeout(t)
         }
     }
