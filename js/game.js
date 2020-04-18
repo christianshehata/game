@@ -255,7 +255,7 @@ window.onload = function() {
         Swal.fire({
             icon: 'info',
             title: 'Instruction',
-            text: 'Welcome to the Corporate IT game. 🧐 Answer the questions by collecting the coins!' + 'Good Luck ' + usersName,
+            text: 'Welcome to the Corporate IT game. 🧐 Answer the questions by collecting the coins!' + 'Good Luck ',
             footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
         })
     }
@@ -264,7 +264,7 @@ window.onload = function() {
     function loseOnClick() {
         Swal.fire({
             icon: 'warning',
-            title: 'You failed, keep it up!' + '\nYou needed ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
+            title: 'You failed, keep it up!' + '\nYou have left ' + seconds + ' seconds \n' + milliSec + ' milliseconds',
             text: 'Reload to play again 🚀',
             footer: '<a href="https://github.com/christianshehata/game">Fork the project right here:</a>'
         })
