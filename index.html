@@ -1,26 +1,48 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Coursegame</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
 
-        <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
-        <link rel="stylesheet" href="assets/css/styles.css">
-        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
-        <style>
-            html { background: black; }
-            canvas { margin:auto; }
-        </style>
-    </head>
-    <body>
-        <div>
-            <script type="text/javascript">
-                var seconds = 7;
-                var milliSec = 0;
-            </script>
-        </div>
-    <script src="js/phaser.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/sweetalert2.all.min.js"></script>
-    </body>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+<script>
+function validateForm(){
+  var x = document.forms["myForm"]["fname"].value;
+  if (x === "") {
+  alert("Don't be shy! You must enter your name please :)");
+  return false;
+  }
+}
+</script>
+</head>
+
+<body>
+  <p style="font-size: 200%;">
+  <br>
+  <br>
+  Welcome to Corporate IT Game!
+  </p>
+  <br>
+  <p>
+    Let the game begin, but first please enter your name
+    <br>
+    <br>
+    <br>
+  </p>
+
+<form style="text-align:center" name="myForm" action="secondpage.html" onsubmit="return validateForm()" method="post">
+  Name: <input id="name" type="text" name="fname"> <br>
+  <input type="submit" value="Send" onclick="myFunction()">
+</form>
+
+<script>
+function myFunction(){
+  const name = document.getElementById("name").value;
+  }
+</script>
+
+<img src="chalkers1.jpeg" width="70" height="70" hspace="300">
+</body>
 </html>
