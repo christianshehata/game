@@ -162,6 +162,7 @@ async function itemHandler(player, item) {
         rightAnswersArray.splice(randomQuestionIndex, 1);
         falseAnswersArrayFirst.splice(randomQuestionIndex, 1);
         falseAnswersArraySecond.splice(randomQuestionIndex, 1);
+        console.log('Asked question: ' + randomQuestion + 'Related answers ' + inputOptions)
         console.log(questionArray);
         console.log(rightAnswersArray);
         console.log(falseAnswersArrayFirst);
