@@ -158,10 +158,10 @@ async function itemHandler(player, item) {
     // Validation of the correct answer
     if (rightAnswersArray.includes(inputOptions[usersChoiceIndex])) {
         currentScore = currentScore + 10;
-        console.log(questionArray.splice(randomQuestionIndex, 1));
-        console.log(rightAnswersArray.splice(randomQuestionIndex, 1));
-        console.log(falseAnswersArrayFirst.splice(randomQuestionIndex, 1));
-        console.log(falseAnswersArraySecond.splice(randomQuestionIndex, 1));
+        questionArray.splice(randomQuestionIndex, 1);
+        rightAnswersArray.splice(randomQuestionIndex, 1);
+        falseAnswersArrayFirst.splice(randomQuestionIndex, 1);
+        falseAnswersArraySecond.splice(randomQuestionIndex, 1);
         console.log(questionArray);
         console.log(rightAnswersArray);
         console.log(falseAnswersArrayFirst);
@@ -322,16 +322,12 @@ window.onload = function() {
             player.animations.play('walk', 10, true);
             player.body.velocity.x = -300;
             player.scale.x = -1;
-            var snd_stepleft = game.add.audio('step');
-            snd_stepleft.play('',0 ,0.2, false);
         }
         // is the right cursor key pressed?
         else if (cursors.right.isDown) {
             player.animations.play('walk', 10, true);
             player.body.velocity.x = 300;
             player.scale.x = 1;
-            var snd_stepright = game.add.audio('step');
-            snd_stepright.play('',0 ,0.2, false);
         }
         // player doesn't move
         else {
