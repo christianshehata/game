@@ -13,7 +13,7 @@ var loseMessage;
 var won = false;
 var lose = false;
 var currentScore = 0;
-var winningScore = 90;
+var winningScore = 70;
 var clickMeButton;
 var attempts = 0;
 var questionArray = [];
